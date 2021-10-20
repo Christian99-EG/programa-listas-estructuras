@@ -1,4 +1,3 @@
-
 // Listas Enlazadas Simples Lineales en C++
 
 #include <iostream>
@@ -228,11 +227,10 @@ Busqueda_posicion(Tlista &lista, int pos){
 
    Tlista q;
    q = lista;
-   int i = 1, band = 0, num; //band = bandera de posicion
-
+   int i = 1, band = 0,num; //band = bandera de posicion
    while(q != NULL){
      if(pos == i){
-           cout<<"En la posicion "<<pos<<" esta el dato "<<q -> nro<<endl;
+           cout<<"En la posicion "<<pos<<" esta el dato "<<q->nro<<endl;
            band = 1;
         }
 
@@ -241,6 +239,48 @@ Busqueda_posicion(Tlista &lista, int pos){
    }
     if(band == 0){ cout<<"numero no encontrado \n";}
 }
+
+Remplazar_posicion(Tlista &lista,int valor,int pos){
+  Tlista q,dq;
+  q = lista;
+  int i =1, band = 0;
+  dq -> nro;
+ while(q != NULL){
+   if(pos == i){
+     cout<<"En la posicion "<<pos<<" esta el dato "<<q-> nro<<endl;
+     //delete(dq);
+     q -> nro = valor;
+     cout<<"el valor fue cambiado por: "<<q -> nro<<endl;
+     band = 1;
+   }
+   q = q -> sgte;
+   i++;
+ }
+}
+
+ void insertar_posicion(Tlista &lista,int valor, int pos){
+   Tlista q,t;
+   q = new (nodo);
+   int i, band = 0;
+  q -> nro = valor;
+
+  if (pos == 1){
+    q-> sgte = lista;
+    lista = q;
+  }else{
+    t = lista;
+     for(i = 1;t != NULL;i++){
+       if(i == pos-1){
+         q -> sgte = t -> sgte;
+         t -> sgte = q;
+         cout<<"numero insertado \n"<<endl;
+         return;
+       }
+       t = t -> sgte;
+     }
+  }
+ }
+
 void menu1()
 {
     system("cls");
@@ -256,132 +296,159 @@ void menu1()
     cout<<" 9. COMPROBAR SI LA LISTA ESTA VACIA "<<endl;
     cout<<"10. Ordenar lista                    "<<endl;
     cout<<"11. Buscar por posicion              "<<endl;
-    cout<<"12. SALIR                            "<<endl;
+    cout<<"12. Remplazar valor                  "<<endl;
+    cout<<"13. Insertar por posicion            "<<endl;
+    cout<<"14. SALIR                            "<<endl;
     cout<<"\n INGRESE OPCION: ";
 }
 
 
 /*                        Funcion Principal
 ---------------------------------------------------------------------*/
+void procesoLista(){
 
-int main(void){
+  Tlista lista = NULL;
+  int op;     // opcion del menu
+  int _dato;  // elemenento a ingresar
+  int pos;    // posicion a insertar
 
-    Tlista lista = NULL;
-    int op;     // opcion del menu
-    int _dato;  // elemenento a ingresar
-    int pos;    // posicion a insertar
+  do{
+      menu1();  cin>> op;
 
+      switch(op){
 
-    //system("color 0b");
+          case 1:
 
-    do{
-        menu1();  cin>> op;
-
-        switch(op){
-
-            case 1:
-
-                 cout<< "\n NUMERO A INSERTAR: "; cin>> _dato;
-                 insertarInicio(lista, _dato);
-            break;
+               cout<< "\n NUMERO A INSERTAR: "; cin>> _dato;
+               insertarInicio(lista, _dato);
+          break;
 
 
-            case 2:
+          case 2:
 
-                 cout<< "\n NUMERO A INSERTAR: "; cin>> _dato;
-                 insertarFinal(lista, _dato );
-            break;
-
-
-            case 3:
-
-                 cout<< "\n NUMERO A INSERTAR: ";cin>> _dato;
-                 cout<< " Posicion : ";       cin>> pos;
-                 insertarElemento(lista, _dato, pos);
-            break;
+               cout<< "\n NUMERO A INSERTAR: "; cin>> _dato;
+               insertarFinal(lista, _dato );
+          break;
 
 
-            case 4:
-                 cout << "\n\n MOSTRANDO LISTA\n\n";
-                 reportarLista(lista);
-            break;
+          case 3:
+               if(lista == NULL){
+         cout<<"Actualmente su lista esta vacia... \n";
+       }else{
+          cout<< "\n NUMERO A INSERTAR: ";cin>> _dato;
+               cout<< " Posicion : ";       cin>> pos;
+               insertarElemento(lista, _dato, pos);
+       }
+          break;
 
 
-            case 5:
-                 if(lista == NULL){
-                 cout<<"Actualmente no tiene datos en su lista...ERROR \n";
-               }else{
-                 cout<<"\n Valor a buscar: "; cin>> _dato;
-                 buscarElemento(lista, _dato);
-               }
-            break;
+          case 4:
+               cout << "\n\n MOSTRANDO LISTA\n\n";
+               reportarLista(lista);
+          break;
 
-            case 6:
-                 if(lista == NULL){
-                   cout<<"actualmente la lista esta vacia... \n";
-                 }else{
-                cout<<"\n Valor a eliminar: "; cin>> _dato;
-                eliminarElemento(lista, _dato);
-              }
-            break;
 
-            case 7:
-
-                if(lista == NULL){
-                 cout<<"Actualmente su lista se encuentra vacia... ERROR \n";
-              }else{
-                cout<<"\n Valor repetido a eliminar: "; cin>> _dato;
-                eliminaRepetidos(lista, _dato);
-              }
-            break;
-
-            case 8:
-             cout<<"ELIMINACION DE LISTA \n";
-            	if(lista == NULL){
-            		cout<<"actualmente su lista se encuentra vacia \n";
-            		cout<<"imposible eliminar lista...ERROR! \n";
-       			}else{
-              while(lista != NULL){
-       			borrar_lista(lista,_dato);
-           }
-           cout<<"se ha vaciado la lista... \n";
-          }
-            break;
-            case 9:
-            if(lista == NULL){
-              cout<<"la lista esta actualmente vacia...\n";
-            }else{
-              cout<<"la lista no esta vacia... actualmente tiene los siguientes elementos:"<<endl;
-
-              reportarLista(lista);
-            }
-            break;
-
-            case 10:
-             cout<<"ORDENAR LISTA \n";
-             if(lista == NULL){
-               cout<<"Actualmente la lista se encuentra vacia... \n";
+          case 5:
+               if(lista == NULL){
+               cout<<"Actualmente no tiene datos en su lista...\n";
              }else{
-               cout<<"ordenando lista \n";
-               Ordenar_lista(lista,_dato);
+               cout<<"\n Valor a buscar: "; cin>> _dato;
+               buscarElemento(lista, _dato);
              }
-            break;
+          break;
 
-            case 11:
-            cout<<"BUSQUEDA DE DATOS POR POSICION \n";
-            if(lista == NULL){
-              cout<<"Actualmente su lista esta vacia...busqueda imposible \n";
-            }else{
-              cout<<"posicion a buscar: "; cin>>pos;
-              Busqueda_posicion(lista, pos);
+          case 6:
+               if(lista == NULL){
+                 cout<<"actualmente la lista esta vacia... \n";
+               }else{
+              cout<<"\n Valor a eliminar: "; cin>> _dato;
+              eliminarElemento(lista, _dato);
             }
-            break;
+          break;
 
+          case 7:
 
+              if(lista == NULL){
+               cout<<"Actualmente su lista se encuentra vacia...\n";
+            }else{
+              cout<<"\n Valor repetido a eliminar: "; cin>> _dato;
+              eliminaRepetidos(lista, _dato);
+            }
+          break;
+
+          case 8:
+           cout<<"ELIMINACION DE LISTA \n";
+            if(lista == NULL){
+              cout<<"actualmente su lista se encuentra vacia \n";
+              cout<<"imposible eliminar lista...\n";
+          }else{
+            while(lista != NULL){
+          borrar_lista(lista,_dato);
+         }
+         cout<<"se ha vaciado la lista... \n";
         }
-        cout<<"\n";
-        system("pause");
-      }while(op != 11);
-        //return 0;
-    }
+          break;
+          case 9:
+          if(lista == NULL){
+            cout<<"la lista esta actualmente vacia...\n";
+          }else{
+            cout<<"la lista no esta vacia... actualmente tiene los siguientes elementos:"<<endl;
+
+            reportarLista(lista);
+          }
+          break;
+
+          case 10:
+           cout<<"ORDENAR LISTA \n";
+           if(lista == NULL){
+             cout<<"Actualmente la lista se encuentra vacia... \n";
+           }else{
+             cout<<"ordenando lista \n";
+             Ordenar_lista(lista,_dato);
+           }
+          break;
+
+          case 11:
+          cout<<"BUSQUEDA DE DATOS POR POSICION \n";
+          if(lista == NULL){
+            cout<<"Actualmente su lista esta vacia...busqueda imposible \n";
+          }else{
+            cout<<"posicion a buscar: "; cin>>pos;
+            Busqueda_posicion(lista, pos);
+          }
+          break;
+
+          case 12:
+          cout<<"REMPLAZAR VALORES\n";
+          if(lista == NULL){
+
+          	cout<<"no se puede modificar un valor de una posicion debido a que su lista esta vacia... \n";
+
+	        }else{
+
+          cout<<"posicion a insertar un nuevo valor: "; cin>>pos;
+          cout<<"nuevo valor: "; cin>> _dato;
+          Remplazar_posicion(lista,_dato,pos);
+		      }
+          break;
+
+          case 13:
+          cout<<"INSERTAR POR POSICION \n";
+          if(lista == NULL){
+            cout<<"lista actualmente vacia \n";
+          }else{
+            cout<<"dato a insertar: "; cin>>_dato;
+            cout<<"posicion: ";cin>>pos;
+            insertar_posicion(lista,_dato,pos);
+          }
+          break;
+      }
+      cout<<"\n";
+      system("pause");
+    }while(op != 14);
+      //return 0;
+}
+int main(void){
+ procesoLista();
+}
 

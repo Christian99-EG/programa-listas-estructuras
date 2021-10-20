@@ -6,15 +6,35 @@
 #include <cstdio>
 using namespace std;
 
-struct nodo
-{
-       int nro;        // en este caso es un numero entero
-       struct nodo *sgte;
-};
-
 typedef struct nodo *Tlista; //tipo lista = Tlista
 
-void insertarInicio(Tlista &lista, int valor)
+class nodo
+{
+public:
+       int nro;        // en este caso es un numero entero
+       struct nodo *sgte;
+       nodo();
+       ~nodo();
+
+       void insertarInicio(Tlista &lista, int valor);
+       void insertarFinal(Tlista &lista, int valor);
+       int insertarAntesDespues();
+       void insertarElemento(Tlista &lista, int valor, int pos);
+       void buscarElemento(Tlista &lista,int valor);
+       void reportarLista(Tlista &lista);
+       void eliminarElemento(Tlista &lista,int valor);
+       void eliminaRepetidos(Tlista &lista, int valor);
+       void borrar_lista(Tlista &lista, int valor);
+       void Ordenar_lista(Tlista &lista,int valor);
+       void Busqueda_posicion(Tlista &lista,int pos);
+       void Remplazar_posicion(Tlista &lista,int valor,int pos);
+       void insertar_posicion(Tlista &lista,int valor,int pos);
+};
+
+nodo::nodo(){}
+nodo::~nodo(){}
+
+void nodo::insertarInicio(Tlista &lista, int valor)
 {
     Tlista q;
     q = new(struct nodo);
@@ -22,8 +42,7 @@ void insertarInicio(Tlista &lista, int valor)
     q->sgte = lista;
     lista  = q;
 }
-
-void insertarFinal(Tlista &lista, int valor)
+void nodo::insertarFinal(Tlista &lista, int valor)
 {
     Tlista t, q = new(struct nodo);
 
@@ -45,8 +64,7 @@ void insertarFinal(Tlista &lista, int valor)
     }
 
 }
-
-int insertarAntesDespues()
+int nodo::insertarAntesDespues()
 {
     int _op, band;
     cout<<endl;
@@ -62,8 +80,7 @@ int insertarAntesDespues()
 
     return band;
 }
-
-void insertarElemento(Tlista &lista, int valor, int pos)
+void nodo::insertarElemento(Tlista &lista, int valor, int pos)
 {
     Tlista q, t;
     int i;
@@ -93,8 +110,7 @@ void insertarElemento(Tlista &lista, int valor, int pos)
     }
     cout<<"   Error...Posicion no encontrada..!"<<endl;
 }
-
-void buscarElemento(Tlista lista, int valor)
+void nodo::buscarElemento(Tlista &lista, int valor)
 {
     Tlista q = lista;
     int i = 1, band = 0;
@@ -119,8 +135,7 @@ void buscarElemento(Tlista lista, int valor)
     //system("pause");
   }
 }
-
-void reportarLista(Tlista lista) //mostrar lista
+void nodo::reportarLista(Tlista &lista) //mostrar lista
 {
      int i = 0;
      if (lista !=NULL)
@@ -133,9 +148,7 @@ void reportarLista(Tlista lista) //mostrar lista
      else
        cout<<"Lista vacia"<<endl;
 }
-
-
-void eliminarElemento(Tlista &lista, int valor)
+void nodo::eliminarElemento(Tlista &lista, int valor)
 {
     Tlista p, ant;
     p = lista;
@@ -158,8 +171,7 @@ void eliminarElemento(Tlista &lista, int valor)
         }
     }
 }
-
-void eliminaRepetidos(Tlista &lista, int valor)
+void nodo::eliminaRepetidos(Tlista &lista, int valor)
 {
     Tlista q, ant;
     q = lista;
@@ -193,16 +205,16 @@ void eliminaRepetidos(Tlista &lista, int valor)
     cout<<"\n\n Valor repetido "<< valor << "fue eliminado..! \n"<<endl;
     //system("pause");
 }
-
-void borrar_lista(Tlista &lista,int valor){
+void nodo:: borrar_lista(Tlista &lista,int valor)
+{
   Tlista p; //crear un nodo auxiliar
   p = lista;
   valor = p -> nro;
   lista = p -> sgte;
   delete(p);
 }
-
-Ordenar_lista(Tlista &lista,int valor){
+void nodo::Ordenar_lista(Tlista &lista,int valor)
+{
   Tlista act,sig;
   act = lista;
   int t;
@@ -222,8 +234,8 @@ Ordenar_lista(Tlista &lista,int valor){
   }
   cout<<"lista ordenada \n";
 }
-
-Busqueda_posicion(Tlista &lista, int pos){
+void nodo::Busqueda_posicion(Tlista &lista, int pos)
+{
 
    Tlista q;
    q = lista;
@@ -239,8 +251,8 @@ Busqueda_posicion(Tlista &lista, int pos){
    }
     if(band == 0){ cout<<"numero no encontrado \n";}
 }
-
-Remplazar_posicion(Tlista &lista,int valor,int pos){
+void nodo::Remplazar_posicion(Tlista &lista,int valor,int pos)
+{
   Tlista q,dq;
   q = lista;
   int i =1, band = 0;
@@ -257,8 +269,8 @@ Remplazar_posicion(Tlista &lista,int valor,int pos){
    i++;
  }
 }
-
- void insertar_posicion(Tlista &lista,int valor, int pos){
+ void nodo::insertar_posicion(Tlista &lista,int valor, int pos)
+ {
    Tlista q,t;
    q = new (nodo);
    int i, band = 0;
@@ -301,11 +313,10 @@ void menu1()
     cout<<"14. SALIR                            "<<endl;
     cout<<"\n INGRESE OPCION: ";
 }
-
-
-/*                        Funcion Principal
----------------------------------------------------------------------*/
-void procesoLista(){
+//funcion proceso LISTA
+void procesoLista()
+{
+  nodo ObjNodos;
 
   Tlista lista = NULL;
   int op;     // opcion del menu
@@ -315,19 +326,20 @@ void procesoLista(){
   do{
       menu1();  cin>> op;
 
-      switch(op){
+      switch(op)
+      {
 
           case 1:
 
                cout<< "\n NUMERO A INSERTAR: "; cin>> _dato;
-               insertarInicio(lista, _dato);
+               ObjNodos.insertarInicio(lista, _dato);
           break;
 
 
           case 2:
 
                cout<< "\n NUMERO A INSERTAR: "; cin>> _dato;
-               insertarFinal(lista, _dato );
+               ObjNodos.insertarFinal(lista, _dato );
           break;
 
 
@@ -337,14 +349,14 @@ void procesoLista(){
        }else{
           cout<< "\n NUMERO A INSERTAR: ";cin>> _dato;
                cout<< " Posicion : ";       cin>> pos;
-               insertarElemento(lista, _dato, pos);
+               ObjNodos.insertarElemento(lista, _dato, pos);
        }
           break;
 
 
           case 4:
                cout << "\n\n MOSTRANDO LISTA\n\n";
-               reportarLista(lista);
+               ObjNodos.reportarLista(lista);
           break;
 
 
@@ -353,7 +365,7 @@ void procesoLista(){
                cout<<"Actualmente no tiene datos en su lista...\n";
              }else{
                cout<<"\n Valor a buscar: "; cin>> _dato;
-               buscarElemento(lista, _dato);
+               ObjNodos.buscarElemento(lista, _dato);
              }
           break;
 
@@ -362,7 +374,7 @@ void procesoLista(){
                  cout<<"actualmente la lista esta vacia... \n";
                }else{
               cout<<"\n Valor a eliminar: "; cin>> _dato;
-              eliminarElemento(lista, _dato);
+              ObjNodos.eliminarElemento(lista, _dato);
             }
           break;
 
@@ -372,7 +384,7 @@ void procesoLista(){
                cout<<"Actualmente su lista se encuentra vacia...\n";
             }else{
               cout<<"\n Valor repetido a eliminar: "; cin>> _dato;
-              eliminaRepetidos(lista, _dato);
+              ObjNodos.eliminaRepetidos(lista, _dato);
             }
           break;
 
@@ -383,7 +395,7 @@ void procesoLista(){
               cout<<"imposible eliminar lista...\n";
           }else{
             while(lista != NULL){
-          borrar_lista(lista,_dato);
+          ObjNodos.borrar_lista(lista,_dato);
          }
          cout<<"se ha vaciado la lista... \n";
         }
@@ -394,7 +406,7 @@ void procesoLista(){
           }else{
             cout<<"la lista no esta vacia... actualmente tiene los siguientes elementos:"<<endl;
 
-            reportarLista(lista);
+            ObjNodos.reportarLista(lista);
           }
           break;
 
@@ -404,7 +416,7 @@ void procesoLista(){
              cout<<"Actualmente la lista se encuentra vacia... \n";
            }else{
              cout<<"ordenando lista \n";
-             Ordenar_lista(lista,_dato);
+             ObjNodos.Ordenar_lista(lista,_dato);
            }
           break;
 
@@ -414,7 +426,7 @@ void procesoLista(){
             cout<<"Actualmente su lista esta vacia...busqueda imposible \n";
           }else{
             cout<<"posicion a buscar: "; cin>>pos;
-            Busqueda_posicion(lista, pos);
+            ObjNodos.Busqueda_posicion(lista, pos);
           }
           break;
 
@@ -428,7 +440,7 @@ void procesoLista(){
 
           cout<<"posicion a insertar un nuevo valor: "; cin>>pos;
           cout<<"nuevo valor: "; cin>> _dato;
-          Remplazar_posicion(lista,_dato,pos);
+          ObjNodos.Remplazar_posicion(lista,_dato,pos);
 		      }
           break;
 
@@ -439,7 +451,7 @@ void procesoLista(){
           }else{
             cout<<"dato a insertar: "; cin>>_dato;
             cout<<"posicion: ";cin>>pos;
-            insertar_posicion(lista,_dato,pos);
+            ObjNodos.insertar_posicion(lista,_dato,pos);
           }
           break;
       }
@@ -449,6 +461,8 @@ void procesoLista(){
       //return 0;
 }
 int main(void){
+	nodo objprincipal;
+
  procesoLista();
 }
 
